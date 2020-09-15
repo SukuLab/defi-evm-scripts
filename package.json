@@ -4,12 +4,14 @@
 	"description": "Boilerplate code for developing Node CLI based applications.",
 	"main": "src/index.ts",
 	"scripts": {
-		"postinstall": "typechain",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "ts-node ./src/index.ts",
+		"postinstall": "npm run typechain",
 		"typechain": "typechain --target=ethers-v5 --outDir './src/contracts/types' './src/contracts/abis/**/*.json'"
 	},
-	"keywords": [ "[\"CLI\"]" ],
+	"keywords": [
+		"[\"CLI\"]"
+	],
 	"author": "Bryce Doganer",
 	"license": "MIT",
 	"dependencies": {
