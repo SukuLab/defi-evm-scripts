@@ -1,3 +1,4 @@
+require('dotenv').config();
 import chalk from 'chalk';
 import clear from 'clear';
 import figlet from 'figlet';
@@ -5,11 +6,16 @@ import figlet from 'figlet';
 import * as inquirer from './lib/inquirer';
 import {} from './lib/fileHandler';
 
+// import { eventQuery } from './services/contracts.service';
+
 clear();
 
 console.log(
 	chalk.blue(
-		figlet.textSync('Node CLI', { font: '3-D', horizontalLayout: 'full' })
+		figlet.textSync('SUKU SMS', {
+			font: '3-D',
+			horizontalLayout: 'full',
+		})
 	)
 );
 
@@ -18,4 +24,7 @@ const run = async () => {
 	console.log(credentials);
 };
 
-run();
+
+(async () => {
+	await run();
+})();

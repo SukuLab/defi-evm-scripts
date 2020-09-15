@@ -4,25 +4,33 @@
 	"description": "Boilerplate code for developing Node CLI based applications.",
 	"main": "src/index.ts",
 	"scripts": {
+		"postinstall": "typechain",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "ts-node ./src/index.ts"
+		"start": "ts-node ./src/index.ts",
+		"typechain": "typechain --target=ethers-v5 --outDir './src/contracts/types' './src/contracts/abis/**/*.json'"
 	},
 	"keywords": [ "[\"CLI\"]" ],
 	"author": "Bryce Doganer",
 	"license": "MIT",
 	"dependencies": {
+		"@types/web3": "^1.2.2",
+		"bignumber.js": "^9.0.0",
 		"chalk": "^4.0.0",
 		"clear": "^0.1.0",
-		"clui": "^0.3.6",
 		"configstore": "^5.0.1",
+		"dotenv": "^8.2.0",
+		"ethers": "^5.0.13",
 		"figlet": "^1.3.0",
 		"inquirer": "^7.1.0",
 		"lodash": "^4.17.15",
 		"minimist": "^1.2.5",
+		"node-rest-client-promise": "^3.1.1",
 		"simple-git": "^1.132.0",
-		"touch": "^3.1.0"
+		"typechain": "^2.0.0",
+		"web3": "^1.2.11"
 	},
 	"devDependencies": {
+		"@typechain/ethers-v5": "^1.0.0",
 		"@types/clear": "^0.1.0",
 		"@types/figlet": "^1.2.0",
 		"@types/inquirer": "^6.5.0",
