@@ -1,6 +1,6 @@
 {
 	"name": "@suku/defi-evm-scripts",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "A collection of scripts to run various tasks on Ethereum based defi smart contracts written in Typescript.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -9,7 +9,6 @@
 		"prebuild": "npm run typechain",
 		"build": "tsc",
 		"example": "ts-note ./src/example.ts",
-		"postinstall": "npm run typechain",
 		"typechain": "typechain --target=ethers-v5 --outDir './src/contracts/types' './src/contracts/abis/**/*.json'",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
