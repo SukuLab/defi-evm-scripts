@@ -8,13 +8,11 @@
 		"prepublish": "npm run build",
 		"prebuild": "npm run typechain",
 		"build": "tsc",
-		"example": "ts-note ./src/example.ts",
+		"example": "ts-node ./src/example.ts",
 		"typechain": "typechain --target=ethers-v5 --outDir './src/contracts/types' './src/contracts/abis/**/*.json'",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"keywords": [
-		"[\"CLI\"]"
-	],
+	"keywords": [ "[\"CLI\"]" ],
 	"author": "Bryce Doganer",
 	"license": "MIT",
 	"dependencies": {
@@ -39,9 +37,9 @@
 		"@types/clear": "^0.1.0",
 		"@types/figlet": "^1.2.0",
 		"@types/inquirer": "^6.5.0",
-		"ts-node": "^8.8.2",
+		"ts-node": "^8.10.2",
 		"tslint": "^6.1.1",
-		"typescript": "^3.8.3",
-		"typechain": "^2.0.0"
+		"typechain": "^2.0.0",
+		"typescript": "^3.8.3"
 	}
 }

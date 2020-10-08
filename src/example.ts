@@ -24,7 +24,8 @@ const run = async () => {
 	const loanResponse = await createLoan(
 		privateKey,
 		provider,
-		42
+		42,
+		'10'
 	);
 
 	console.log("Loan Response:")
