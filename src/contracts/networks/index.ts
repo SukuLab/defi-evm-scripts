@@ -14,13 +14,38 @@ import { ComptrollerAbi } from '../types/ComptrollerAbi';
 import { SimplePriceOracleAbi } from '../types/SimplePriceOracleAbi';
 
 
-export const Networks = {
+export const ChainId = {
   MainNet: 1,
   Ropsten: 3,
   Rinkeby: 4,
   Goerli: 5,
   Kovan: 42,
 };
+
+const ETHERSCAN_PREFIXES: { [key: number]: string } = {
+  [ChainId.MainNet]: '',
+  [ChainId.Ropsten]: 'ropsten.',
+  [ChainId.Rinkeby]: 'rinkeby.',
+  [ChainId.Goerli]: 'goerli.',
+  [ChainId.Kovan]: 'kovan.'
+}
+
+export const getEtherscanLink = (chainId: number, data: string, type: 'transaction' | 'token' | 'address'): string => {
+  const prefix = `https://${ETHERSCAN_PREFIXES[chainId] || ETHERSCAN_PREFIXES[1]}etherscan.io`
+
+  switch (type) {
+    case 'transaction': {
+      return `${prefix}/tx/${data}`
+    }
+    case 'token': {
+      return `${prefix}/token/${data}`
+    }
+    case 'address':
+    default: {
+      return `${prefix}/address/${data}`
+    }
+  }
+}
 
 export interface ContractAddress { 
   address: string; 
@@ -59,7 +84,7 @@ export const CONTRACTS_BY_NETWORK: {
   [key: number]: NetworkConfig<ContractAddress>;
 } = {
   // [Networks.MainNet]: mainnetNetworkConfig
-  [Networks.Kovan]: kovanNetworkConfig,
+  [ChainId.Kovan]: kovanNetworkConfig,
 };
 
 /**
