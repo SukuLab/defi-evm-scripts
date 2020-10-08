@@ -1,6 +1,6 @@
 {
 	"name": "@suku/defi-evm-scripts",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"description": "A collection of scripts to run various tasks on Ethereum based defi smart contracts written in Typescript.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -12,7 +12,9 @@
 		"typechain": "typechain --target=ethers-v5 --outDir './src/contracts/types' './src/contracts/abis/**/*.json'",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"keywords": [ "[\"CLI\"]" ],
+	"keywords": [
+		"[\"CLI\"]"
+	],
 	"author": "Bryce Doganer",
 	"license": "MIT",
 	"dependencies": {
