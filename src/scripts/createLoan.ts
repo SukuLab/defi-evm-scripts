@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { BigNumberish, ethers } from 'ethers';
 
 // Import Contract ABIs
 import ERC20_ABI from '../contracts/abis/ERC20.abi.json';
@@ -46,8 +46,15 @@ const error = (
 
 // https://docs.ethers.io/v5/api/utils/display-logic/
 const bnFrom = ethers.BigNumber.from;
-const formatUnits = ethers.utils.formatUnits;
 const parseUnits = ethers.utils.parseUnits;
+const formatUnits = ethers.utils.formatUnits;
+const formatUnitsFixed = (
+	value: BigNumberish,
+	unitName: string | number | undefined,
+	fixed = 2
+): string => {
+	return Number(formatUnits(value, unitName)).toFixed(fixed);
+};
 
 /**
 	* Use the SUKU token as collateral to obtain a USDC loan. 
@@ -114,7 +121,7 @@ export async function createLoan(
 	/**
    * Get SUKU Balance
    */
-	let sukuDepositBalance;
+	let sukuDepositBalance = bnFrom('0');
 	try {
 		log('info', `Obtaining SUKU balance for address: ${walletAddress}`);
 		// TODO: Min balance checks. IF balance is zero (or possibly a bit more) return an error
@@ -182,7 +189,7 @@ export async function createLoan(
 		);
 		const approvalTx = await sukuContract.approve(
 			cSukuAddr,
-			sukuDepositBalance || bnFrom('0')
+			sukuDepositBalance
 		);
 		await approvalTx.wait(); // wait for confirmation
 		log('debug', `Finished approval.`);
@@ -202,7 +209,7 @@ export async function createLoan(
 			'info',
 			`Minting CSUKU: ${cSukuAddr} for account: ${walletAddress} with SUKU balance of: ${sukuDepositBalance}.`
 		);
-		const mintTx = await cSukuContract.mint(sukuDepositBalance || bnFrom('0'));
+		const mintTx = await cSukuContract.mint(sukuDepositBalance);
 		await mintTx.wait(); // wait for confirmation
 		log('debug', `Finished minting.`);
 	} catch (e) {
@@ -214,15 +221,14 @@ export async function createLoan(
 	}
 
 	let txHash = '';
+	let borrowAmount = sukuDepositBalance.div(5);
 	/**
 	* borrow the HALF of the amount of liquidity available  
 	*/
 	try {
 		log('info', `Borrowing 1 USDC for every 5 SUKU..`);
 		// TODO: 1 USDC is being minted for 5 SUKU. In the furture this should be based on price oracles
-		const borrowTx = await cUsdcContract.borrow(
-			sukuDepositBalance.div(5) || bnFrom('0')
-		);
+		const borrowTx = await cUsdcContract.borrow(borrowAmount);
 		txHash = borrowTx.hash;
 		await borrowTx.wait(); // wait for confirmation
 		log('debug', `Finished borrowing.`);
@@ -279,9 +285,11 @@ export async function createLoan(
 		);
 		return {
 			error: Errors.NO_ERROR,
-			message: `Successfully borrowed USDC. Your current balance is: ${decimalBalance} USDC. Current account liquidity is: $${Number(
-				formatUnits(accountLiquidity, 18)
-			).toFixed(2)}. Tap to view TX: ${etherscanLink}`,
+			message: `Thank you for borrowing ${formatUnits(
+				borrowAmount,
+				18
+			)} USDC. Your total USDC balance after this transaction is: ${decimalBalance} USDC. Tap to view TX: ${etherscanLink}`,
+			// Current account liquidity is: $${ formatUnitsFixed(accountLiquidity, 18, 2) }
 		};
 	} catch (e) {
 		return error(
