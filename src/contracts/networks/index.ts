@@ -12,6 +12,7 @@ import { CErc20ImmutableAbi } from '../types/CErc20ImmutableAbi';
 import { Erc20Abi } from '../types/Erc20Abi';
 import { ComptrollerAbi } from '../types/ComptrollerAbi';
 import { SimplePriceOracleAbi } from '../types/SimplePriceOracleAbi';
+import { binanceTestnetConfig } from './binancetestnet';
 
 
 export const ChainId = {
@@ -20,6 +21,8 @@ export const ChainId = {
   Rinkeby: 4,
   Goerli: 5,
   Kovan: 42,
+  BscMainnet: 56,
+  BscTestnet: 97,
 };
 
 const ETHERSCAN_PREFIXES: { [key: number]: string } = {
@@ -32,6 +35,10 @@ const ETHERSCAN_PREFIXES: { [key: number]: string } = {
 
 export const getEtherscanLink = (chainId: number, data: string, type: 'transaction' | 'token' | 'address'): string => {
   const prefix = `https://${ETHERSCAN_PREFIXES[chainId] || ETHERSCAN_PREFIXES[1]}etherscan.io`
+
+  if (chainId === ChainId.BscTestnet) {
+    return 'https://testnet.bscscan.com/tx/' + data;
+  }
 
   switch (type) {
     case 'transaction': {
@@ -85,6 +92,7 @@ export const CONTRACTS_BY_NETWORK: {
 } = {
   // [Networks.MainNet]: mainnetNetworkConfig
   [ChainId.Kovan]: kovanNetworkConfig,
+  [ChainId.BscTestnet]: binanceTestnetConfig,
 };
 
 /**
