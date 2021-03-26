@@ -1,6 +1,6 @@
 {
 	"name": "@suku/defi-evm-scripts",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"description": "A collection of scripts to run various tasks on Ethereum based defi smart contracts written in Typescript.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
