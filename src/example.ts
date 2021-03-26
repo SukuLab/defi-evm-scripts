@@ -4,6 +4,7 @@ import clear from 'clear';
 import figlet from 'figlet';
 
 import { createLoan } from './scripts/createLoan';
+import { ChainId } from './contracts/networks';
 
 clear();
 
@@ -24,8 +25,8 @@ const run = async () => {
 	const loanResponse = await createLoan(
 		privateKey,
 		provider,
-		42,
-		'10'
+		ChainId.BscTestnet,
+		'.0008'
 	);
 
 	console.log("Loan Response:")
